@@ -1,0 +1,36 @@
+name : Python Energy Workflow
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  optimize-python-code:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9 
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt  
+
+    - name: Run script
+      run: python3 autocomp.py
+
+    - name: Commit and push if it's a success
+      run: |
+        git config --global user.name 'Energy Bot'
+        git config --global user.email 'EBOT@gmail.com'
+        git add src/*.py
+        git diff-index --quiet HEAD || git commit -m "Optimized code"
+        git push
+      if: ${{ success() }}
