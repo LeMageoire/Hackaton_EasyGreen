@@ -34,7 +34,7 @@ def benchmark_code(directory, executable='main.py'):
     return measure_execution_time(executable)
 
 if __name__ == '__main__':
-    initial_time = benchmark_code("src")  # Define initial_time
+    initial_time = benchmark_code("src")  
     source_code_directory = 'src'
     optimized_directory = 'energy'
     if not os.path.exists(optimized_directory):
@@ -42,7 +42,14 @@ if __name__ == '__main__':
     for root, dirs, files in os.walk(source_code_directory):
         for file in files:
             if file.endswith('.py'):
-                shutil.copy(os.path.join(root, file), optimized_directory)
+                file_path = os.path.join(root, file)
+                with open(file_path, 'r') as source:
+                    lines = source.readlines()
+                with open(file_path, 'w') as source:
+                    if "main" not in file:
+                        source.write("from numba import jit\n")
+                    source.writelines(lines)
+                shutil.copy(file_path, optimized_directory)
                 if "main" in file:
                     continue
                 file_path = os.path.join(optimized_directory, file)
