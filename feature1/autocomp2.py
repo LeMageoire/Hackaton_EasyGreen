@@ -36,17 +36,15 @@ def benchmark_code(directory, executable='main.py'):
 if __name__ == '__main__':
     initial_time = benchmark_code("src")  # Define initial_time
     source_code_directory = 'src'
-    backup_directory = 'backup'
     optimized_directory = 'energy'
     if not os.path.exists(optimized_directory):
         os.makedirs(optimized_directory)
-    if not os.path.exists(backup_directory):
-        os.makedirs(backup_directory)
     for root, dirs, files in os.walk(source_code_directory):
         for file in files:
             if file.endswith('.py'):
-                shutil.copy(os.path.join(root, file), backup_directory)
                 shutil.copy(os.path.join(root, file), optimized_directory)
+                if "main" in file:
+                    continue
                 file_path = os.path.join(optimized_directory, file)
                 with open(file_path, 'r') as source:
                     tree = ast.parse(source.read())
