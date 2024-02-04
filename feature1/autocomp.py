@@ -1,5 +1,6 @@
 import ast
 import os
+import time
 from subprocess import run, PIPE
 import shutil
 
@@ -16,12 +17,13 @@ def modify_source_code(file_path):
         source_code = file.read()
 
     tree = ast.parse(source_code)
+    # Add the import statement at the beginning of the file
+    tree.body.insert(0, ast.ImportFrom(module='numba', names=[ast.alias(name='jit', asname=None)], level=0))
     tree = DecoratorAdder().visit(tree)
     modified_code = ast.unparse(tree)
 
     with open(file_path, 'w') as file:
         file.write(modified_code)
-
  # Function to measure execution time
 def measure_execution_time(executable):
     start = time.time()
@@ -41,7 +43,7 @@ if __name__ == '__main__':
         for file in files:
             if file.endswith('.py'):
                 shutil.copy(os.path.join(root, file), 'energy')
-                modify_source_code(os.path.join(root, file))
+                modify_source_code(os.path.join('energy', file))
 
   # Step 1 : Measure performance before optimization
     pre_time = benchmark_code("src")
