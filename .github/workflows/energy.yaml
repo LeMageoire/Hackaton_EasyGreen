@@ -23,7 +23,7 @@ jobs:
       run: |
         pip install -r requirements.txt  
 
-     - name: Run script
+    - name: Run script
       run: python autocomp.py
 
     - name: Commit and push if it's a success
