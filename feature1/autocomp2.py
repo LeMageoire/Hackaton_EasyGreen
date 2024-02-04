@@ -1,4 +1,5 @@
 import ast
+import astunparse
 import os
 import time
 from subprocess import run, PIPE
@@ -28,11 +29,12 @@ def measure_execution_time(executable):
     end = time.time()
     return end - start
 
-def benchmark_code(executable = "main.py"):
+def benchmark_code(directory, executable='main.py'):
+    executable = os.path.join(directory, executable)
     return measure_execution_time(executable)
 
 if __name__ == '__main__':
-	pre_time = benchmark_code("src")
+    initial_time = benchmark_code("src")  # Define initial_time
     source_code_directory = 'src'
     backup_directory = 'backup'
     optimized_directory = 'energy'
@@ -54,10 +56,10 @@ if __name__ == '__main__':
                             node.decorator_list.append(ast.Name(id='jit', ctx=ast.Load()))
                             with open(file_path, 'w') as source:
                                 source.write(astunparse.unparse(tree))
-                            post_time = benchmark_code(optimized_directory)
-                            if post_time >= pre_time:
+                                post_time = benchmark_code(optimized_directory)
+                            if post_time >= initial_time:
                                 shutil.copy('temp.py', file_path)
-	final_time = benchmark_code(optimized_directory)
+    final_time = benchmark_code(optimized_directory)
     if final_time < initial_time:
         print("Success: The optimized code is faster")
         exit(0)
