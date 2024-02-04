@@ -1,6 +1,6 @@
 name : Python Energy Workflow
 
-on:
+on: 
   push:
     branches:
       - main
@@ -17,17 +17,21 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.9' 
+        python-version: 3.9 
 
     - name: Install Dependencies
       run: |
         pip install -r requirements.txt  
 
-    - name: Run Optimization Script
-      run: | 
-        python feature1/autocomp.py 
-           if [ $? -eq 0 ]; then
-              git config --global user.name 'CI Automation'
-              git config --global user.email 'ci@example.com'
-              git diff --quiet || (git commit -am "Automate optimization of Python functions" && git push)
-          fi
+     - name: Run script
+      run: python autocomp.py
+
+    - name: Commit and push if it's a success
+      run: |
+        git config --global user.name 'Energy Bot'
+        git config --global user.email 'EBOT@gmail.com'
+        git checkout -b energy
+        git add .
+        git commit -m "Optimized code"
+        git push origin energy
+      if: ${{ success() }}
