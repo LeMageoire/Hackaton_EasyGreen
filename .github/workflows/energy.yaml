@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test_luni
 
 jobs:
   optimize-python-code:
