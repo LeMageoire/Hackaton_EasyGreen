@@ -27,15 +27,21 @@ jobs:
     - name: Run script
       run: python feature1/autocomp.py
 
-    - name: Commit and push if it's a success
-      run: |
-        git config --global user.name 'Energy Bot'
-        git config --global user.email 'EBOT@gmail.com'
+- name: Commit and push if it's a success
+  run: |
+    git config --global user.name 'Energy Bot'
+    git config --global user.email 'EBOT@gmail.com'
+
+    # Check for changes
+    if git diff-index --quiet HEAD --; then
+        echo "No changes to commit."
+    else
         git stash
         git checkout energy || git checkout -b energy
         git stash apply
         git pull origin energy --rebase || true
         git add .
-        git diff-index --quiet HEAD || git commit -m "Optimized code"
+        git commit -m "Optimized code"
         git push origin energy
-      if: ${{ success() }}
+    fi
+  if: ${{ success() }}
