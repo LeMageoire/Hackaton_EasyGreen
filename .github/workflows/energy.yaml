@@ -35,6 +35,6 @@ jobs:
         git stash apply
         git pull origin energy --rebase || true
         git add .
-        git commit -m "Optimized code"
+        git diff-index --quiet HEAD || git commit -m "Optimized code"
         git push origin energy
       if: ${{ success() }}
