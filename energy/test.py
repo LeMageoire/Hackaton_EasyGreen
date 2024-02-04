@@ -1,24 +1,21 @@
-
 from numba import jit
 
-@jit
 def quicksort(arr, start, end):
-    if (start < end):
+    if start < end:
         pivot_index = partition(arr, start, end)
         quicksort(arr, start, pivot_index)
-        quicksort(arr, (pivot_index + 1), end)
+        quicksort(arr, pivot_index + 1, end)
 
-@jit
 def partition(arr, start, end):
     pivot = arr[start]
-    low = (start + 1)
+    low = start + 1
     high = end
     while True:
-        while ((low <= high) and (arr[high] >= pivot)):
-            high = (high - 1)
-        while ((low <= high) and (arr[low] <= pivot)):
-            low = (low + 1)
-        if (low <= high):
+        while low <= high and arr[high] >= pivot:
+            high = high - 1
+        while low <= high and arr[low] <= pivot:
+            low = low + 1
+        if low <= high:
             (arr[low], arr[high]) = (arr[high], arr[low])
         else:
             break
