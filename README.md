@@ -6,4 +6,5 @@ Hackaton_42 sur la thématique du Green IT du point de vue du Software Developpe
 
 ## Configuration
 - [ ] the CI pipeline needs rights to do it
+- [ ] update the requirements
 
