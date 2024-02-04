@@ -1,0 +1,33 @@
+name : Python Energy Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  optimize-python-code:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GIT_PUSH_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9' 
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt  
+
+    - name: Run Optimization Script
+      run: | 
+        python feature1/autocomp.py 
+           if [ $? -eq 0 ]; then
+              git config --global user.name 'CI Automation'
+              git config --global user.email 'ci@example.com'
+              git diff --quiet || (git commit -am "Automate optimization of Python functions" && git push)
+          fi
