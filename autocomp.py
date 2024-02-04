@@ -65,6 +65,7 @@ if __name__ == '__main__':
                             if post_time >= initial_time:
                                 shutil.copy('temp.py', file_path)
     final_time = benchmark_code(optimized_directory)
+    os.remove('temp.py')
     if final_time < initial_time:
         print("Success: The optimized code is faster")
         exit(0)
