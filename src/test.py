@@ -1,7 +1,9 @@
 
 from numba import jit
 from numba import jit
+from numba import jit
 
+@jit
 @jit
 @jit
 def quicksort(arr, start, end):
@@ -10,6 +12,7 @@ def quicksort(arr, start, end):
         quicksort(arr, start, pivot_index)
         quicksort(arr, (pivot_index + 1), end)
 
+@jit
 @jit
 @jit
 def partition(arr, start, end):
