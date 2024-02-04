@@ -31,7 +31,7 @@ jobs:
         git config --global user.name 'Energy Bot'
         git config --global user.email 'EBOT@gmail.com'
         git checkout energy || git checkout -b energy
-        git pull origin energy || true
+        git pull origin energy --rebase || true
         git add .
         git commit -m "Optimized code"
         git push origin energy
