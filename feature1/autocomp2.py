@@ -25,7 +25,7 @@ def modify_source_code(file_path):
  # Function to measure execution time
 def measure_execution_time(executable):
     start = time.time()
-    run(["python", executable])
+    run(["python3", executable])
     end = time.time()
     return end - start
 
