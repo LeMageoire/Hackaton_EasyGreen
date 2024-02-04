@@ -52,7 +52,7 @@ if __name__ == '__main__':
                 shutil.copy(file_path, optimized_directory)
                 if "main" in file:
                     continue
-                file_path = os.path.join(optimized_directory, file)
+                file_path = os.path.join(source_code_directory, file)
                 with open(file_path, 'r') as source:
                     tree = ast.parse(source.read())
                     for node in ast.walk(tree):
