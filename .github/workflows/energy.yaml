@@ -33,4 +33,5 @@ jobs:
         git config --global user.email 'EBOT@gmail.com'
         git add .
         git diff-index --quiet HEAD || git commit -m "Optimized code"
+        git push
       if: ${{ success() }}
