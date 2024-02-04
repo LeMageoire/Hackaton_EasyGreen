@@ -8,12 +8,12 @@ on:
 jobs:
   optimize-python-code:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.GIT_PUSH_TOKEN }}
-
+    
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
